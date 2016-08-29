@@ -20,6 +20,8 @@
 #import "STPPaymentConfiguration+Private.h"
 #import "STPWeakStrongMacros.h"
 #import "STPPaymentContextAmountModel.h"
+#import "STPShippingAddressViewController.h"
+#import "STPShippingMethodsViewController.h"
 
 #define FAUXPAS_IGNORED_IN_METHOD(...)
 
@@ -198,6 +200,8 @@
                                                         companyName:self.configuration.companyName];
 }
 
+#pragma mark - Payment Methods
+
 - (void)presentPaymentMethodsViewController {
     NSCAssert(self.hostViewController != nil, @"hostViewController must not be nil on STPPaymentContext when calling pushPaymentMethodsViewController on it. Next time, set the hostViewController property first!");
     WEAK(self);
@@ -266,6 +270,25 @@
         }];
     }
 }
+
+#pragma mark - Shipping Info
+
+- (void)presentShippingInfoViewController {
+    NSCAssert(self.hostViewController != nil, @"hostViewController must not be nil on STPPaymentContext when calling pushPaymentMethodsViewController on it. Next time, set the hostViewController property first!");
+    WEAK(self);
+    [self.didAppearPromise voidOnSuccess:^{
+        STRONG(self);
+        STPPaymentMethodsViewController *paymentMethodsViewController = [[STPPaymentMethodsViewController alloc] initWithPaymentContext:self];
+        self.paymentMethodsViewController = paymentMethodsViewController;
+        paymentMethodsViewController.prefilledInformation = self.prefilledInformation;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:paymentMethodsViewController];
+        [navigationController.navigationBar stp_setTheme:self.theme];
+        navigationController.modalPresentationStyle = self.modalPresentationStyle;
+        [self.hostViewController presentViewController:navigationController animated:YES completion:nil];
+    }];
+}
+
+#pragma mark - Request Payment
 
 - (void)requestPayment {
     FAUXPAS_IGNORED_IN_METHOD(APIAvailability);

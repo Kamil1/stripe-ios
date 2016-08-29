@@ -35,6 +35,20 @@ typedef NS_ENUM(NSUInteger, STPBillingAddressFields) {
 };
 
 /**
+ *  What set of shipping address information you need to collect from your user.
+ */
+typedef NS_ENUM(NSUInteger, STPShippingAddressFields) {
+    /**
+     *  No shipping address information
+     */
+    STPShippingAddressFieldsNone,
+    /**
+     *  Request the user's full shipping address
+     */
+    STPShippingAddressFieldsFull,
+};
+
+/**
  *  STPAddress Contains an address as represented by the Stripe API.
  */
 @interface STPAddress : NSObject
