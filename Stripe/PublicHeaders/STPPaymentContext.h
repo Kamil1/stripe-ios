@@ -142,6 +142,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pushPaymentMethodsViewController;
 
 /**
+ *  This creates, configures, and appropriately presents a view controller for collecting shipping address and shipping method on top of the payment context's `hostViewController`. It'll be dismissed automatically when the user is done selecting their payment method.
+ */
+- (void)presentShippingInfoViewController;
+
+/**
  *  Requests payment from the user. This may need to present some supplemental UI to the user, in which case it will be presented on the payment context's `hostViewController`. For instance, if they've selected Apple Pay as their payment method, calling this method will show the payment sheet. If the user has a card on file, this will use that without presenting any additional UI. After this is called, the `paymentContext:didCreatePaymentResult:completion:` and `paymentContext:didFinishWithStatus:error:` methods will be called on the context's `delegate`.
  */
 - (void)requestPayment;

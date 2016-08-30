@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STPTheme.h"
 
 @interface STPShippingAddressViewController : UIViewController
+
+- (instancetype)initWithTheme:(STPTheme *)theme;
 
 @end

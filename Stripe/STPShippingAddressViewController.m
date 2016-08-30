@@ -19,6 +19,7 @@
 #import "UIViewController+Stripe_ParentViewController.h"
 #import "NSArray+Stripe_BoundSafe.h"
 #import "UITableViewCell+Stripe_Borders.h"
+#import "STPAddress.h"
 
 @interface STPShippingAddressViewController ()<STPAddressViewModelDelegate, STPAddressFieldTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property(nonatomic)STPTheme *theme;
@@ -34,6 +35,17 @@
 @end
 
 @implementation STPShippingAddressViewController
+
+- (instancetype)initWithTheme:(STPTheme *)theme {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        _theme = theme;
+        // TODO: required fields?
+        _addressViewModel = [[STPAddressViewModel alloc] initWithRequiredBillingFields:STPBillingAddressFieldsFull];
+        self.title = NSLocalizedString(@"Shipping", @"Title for shipping address view");
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

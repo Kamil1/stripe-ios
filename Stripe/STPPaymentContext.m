@@ -278,10 +278,9 @@
     WEAK(self);
     [self.didAppearPromise voidOnSuccess:^{
         STRONG(self);
-        STPPaymentMethodsViewController *paymentMethodsViewController = [[STPPaymentMethodsViewController alloc] initWithPaymentContext:self];
-        self.paymentMethodsViewController = paymentMethodsViewController;
-        paymentMethodsViewController.prefilledInformation = self.prefilledInformation;
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:paymentMethodsViewController];
+        STPShippingAddressViewController *addressViewController = [[STPShippingAddressViewController alloc] initWithTheme:self.theme];
+        // TODO: prefilled information
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addressViewController];
         [navigationController.navigationBar stp_setTheme:self.theme];
         navigationController.modalPresentationStyle = self.modalPresentationStyle;
         [self.hostViewController presentViewController:navigationController animated:YES completion:nil];
